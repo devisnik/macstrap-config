@@ -165,12 +165,12 @@ case $applyConfiguration in
         # Note: if you’re in the US, replace `EUR` with `USD`, `Centimeters` with
         # `Inches`, `en_GB` with `en_US`, and `true` with `false`.
         defaults write NSGlobalDomain AppleLanguages -array "en" "de"
-        defaults write NSGlobalDomain AppleLocale -string "en_US@currency=CHF"
+        defaults write NSGlobalDomain AppleLocale -string "en_US@currency=EUR"
         defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
         defaults write NSGlobalDomain AppleMetricUnits -bool true
 
         printf "\t- Set the timezone; see 'sudo systemsetup -listtimezones' for other values\n"
-        sudo systemsetup -settimezone "Europe/Zurich" > /dev/null
+        sudo systemsetup -settimezone "Europe/Berlin" > /dev/null
 
         ###############################################################################
         echo

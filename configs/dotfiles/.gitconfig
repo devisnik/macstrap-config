@@ -1,5 +1,14 @@
 [alias]
 
+	# my personal ones
+	df = diff -b
+	st = status -sb
+	ci = commit
+	cian = commit --amend --no-edit
+	co = checkout
+	lgg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	dfc = diff --cached
+
 	# View abbreviated SHA, description, and history graph of the latest 20 commits
 	l = log --pretty=oneline -n 20 --graph --abbrev-commit
 
