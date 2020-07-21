@@ -1,15 +1,5 @@
-" Use the Afterglow theme
-set background=dark
-let g:afterglow_italic_comments=1
-let g:afterglow_inherit_background=1
-colorscheme afterglow
-let g:airline_theme='afterglow'
-
 " Make Vim more useful
 set nocompatible
-
-" Use the OS clipboard by default (on versions compiled with `+clipboard`)
-set clipboard=unnamed
 
 " Enhance command-line completion
 set wildmenu
@@ -31,10 +21,6 @@ set encoding=utf-8 nobomb
 
 " Change mapleader
 let mapleader=","
-
-" Don’t add empty newlines at the end of files
-set binary
-set noeol
 
 " Centralize backups, swapfiles and undo history
 set backupdir=~/.vim/backups
@@ -64,11 +50,7 @@ syntax on
 set cursorline
 
 " Make tabs as wide as two spaces
-set tabstop=2
-
-" Show “invisible” characters
-set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
-set list
+set tabstop=4
 
 " Highlight searches
 set hlsearch
@@ -85,17 +67,8 @@ set laststatus=2
 " Enable mouse in all modes
 set mouse=a
 
-" Disable error bells
-set noerrorbells
-
-" Don’t reset cursor to start of line when moving around.
-set nostartofline
-
 " Show the cursor position
 set ruler
-
-" Don’t show the intro message when starting Vim
-set shortmess=atI
 
 " Show the current mode
 set showmode
@@ -122,12 +95,3 @@ noremap <leader>ss :call StripWhitespace()<CR>
 " Save a file as root (,W)
 noremap <leader>W :w !sudo tee % > /dev/null<CR>
 
-" Automatic commands
-if has("autocmd")
-	" Enable file type detection
-	filetype on
-	" Treat .json files as .js
-	autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
-	" Treat .md files as Markdown
-	autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
-endif
