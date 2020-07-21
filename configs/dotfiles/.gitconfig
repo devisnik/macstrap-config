@@ -187,3 +187,6 @@
 
     # Check all fetched objects and abort in the case of a malformed object or a broken link
     fsckobjects = true
+[user]
+	email = volker.leck@gmail.com
+	name = Volker Leck
