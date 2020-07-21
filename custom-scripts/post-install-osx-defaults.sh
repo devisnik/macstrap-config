@@ -58,14 +58,8 @@ case $applyConfiguration in
         printf "\t- Set standby delay to 24 hours (default is 1 hour)\n"
         sudo pmset -a standbydelay 86400
 
-        printf "\t- Disable the sound effects on boot\n"
-        sudo nvram SystemAudioVolume=" "
-
         printf "\t- Set sidebar icon size to medium\n"
         defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2
-
-        printf "\t- Always show scrollbars\n"
-        defaults write NSGlobalDomain AppleShowScrollBars -string "Always\n"
 
         printf "\t- Disabling OS X Gate Keeper\n"
         printf "\t\t- (You'll be able to install any app you want from here on, not just Mac App Store apps)\n"
@@ -82,42 +76,11 @@ case $applyConfiguration in
         printf "\t- Automatically quit printer app once the print jobs complete\n"
         defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
 
-        printf "\t- Disabling resume system-wide\n"
-        defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool false
-        defaults write com.apple.systempreferences NSQuitAlwaysKeepsWindows -bool false
-
-        printf "\t- Disabling automatic termination of inactive apps\n"
-        defaults write NSGlobalDomain NSDisableAutomaticTermination -bool true
-
         printf "\t- Saving to disk (not to iCloud) by default\n"
         defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 
         printf "\t- Disabling the \"Are you sure you want to open this application?\" dialog\n"
         defaults write com.apple.LaunchServices LSQuarantine -bool false
-
-        printf "\t- Check for software updates daily, not just once per week\n"
-        defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
-
-        printf "\t- Disable smart quotes, smart dashes, period substitution, automatic capitalization and auto correct\n"
-        defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
-        defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
-        defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
-        defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
-        defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
-
-        printf "\t- Set Help Viewer windows to non-floating mode\n"
-        defaults write com.apple.helpviewer DevMode -bool true
-
-        printf "\t- Disable Notification Center and remove the menu bar icon\n"
-        launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist 2> /dev/null
-
-        printf "\t- Use graphite theme and dark menu bar\n"
-        defaults write NSGlobalDomain AppleAquaColorVariant -int 6
-        defaults write NSGlobalDomain AppleHighlightColor -string "0.847059 0.847059 0.862745"
-        defaults write NSGlobalDomain AppleInterfaceStyle -string Dark
-
-        printf "\t- Disable system sound effects\n"
-        defaults write NSGlobalDomain "com.apple.sound.uiaudio.enabled" -int 0
 
         ###############################################################################
         echo
@@ -178,16 +141,6 @@ case $applyConfiguration in
         printf "\t #################################\n"
         echo
         ###############################################################################
-
-        printf "\t- Requiring password immediately after sleep or screen saver begins\n"
-        defaults write com.apple.screensaver askForPassword -int 1
-        defaults write com.apple.screensaver askForPasswordDelay -int 0
-
-        printf "\t- Enabling subpixel font rendering on non-Apple LCDs\n"
-        defaults write NSGlobalDomain AppleFontSmoothing -int 1
-
-        printf "\t- Enable HiDPI display modes (requires restart)\n"
-        sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
 
         printf "\t- Save screenshots to the desktop\n"
         defaults write com.apple.screencapture location -string "${HOME}/Desktop"
@@ -330,10 +283,6 @@ case $applyConfiguration in
         printf "\t- Speed up Mission Control animations\n"
         defaults write com.apple.dock expose-animation-duration -float 0.1
 
-        printf "\t- Don’t group windows by application in Mission Control\n"
-        # (i.e. use the old Exposé behavior instead)
-        defaults write com.apple.dock expose-group-by-app -bool false
-
         printf "\t- Disable Dashboard\n"
         defaults write com.apple.dashboard mcx-disabled -bool true
 
@@ -376,123 +325,6 @@ case $applyConfiguration in
         printf "\t- Hot corners: Top left screen corner → Put display to sleep\n"
         defaults write com.apple.dock wvous-tl-corner -int 10
         defaults write com.apple.dock wvous-tl-modifier -int 0
-
-        ###############################################################################
-        echo
-        printf "\t Safari & WebKit\n"
-        printf "\t #################################\n"
-        echo
-        ###############################################################################
-
-        printf "\t- Privacy: don’t send search queries to Apple\n"
-        defaults write com.apple.Safari UniversalSearchEnabled -bool false
-        defaults write com.apple.Safari SuppressSearchSuggestions -bool true
-
-        printf "\t- Press Tab to highlight each item on a web page\n"
-        defaults write com.apple.Safari WebKitTabToLinksPreferenceKey -bool true
-        defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2TabsToLinks -bool true
-
-        printf "\t- Show the full URL in the address bar (note: this still hides the scheme)\n"
-        defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true
-
-        printf "\t- Set Safari’s home page to 'about:blank' for faster loading\n"
-        defaults write com.apple.Safari HomePage -string "about:blank"
-
-        printf "\t- Prevent Safari from opening ‘safe’ files automatically after downloading\n"
-        defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
-
-        printf "\t- Allow hitting the Backspace key to go to the previous page in history\n"
-        defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled -bool true
-
-        printf "\t- Hide Safari’s bookmarks bar by default\n"
-        defaults write com.apple.Safari ShowFavoritesBar -bool false
-
-        printf "\t- Hide Safari’s sidebar in Top Sites\n"
-        defaults write com.apple.Safari ShowSidebarInTopSites -bool false
-
-        printf "\t- Disable Safari’s thumbnail cache for History and Top Sites\n"
-        defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
-
-        printf "\t- Enable Safari’s debug menu\n"
-        defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
-
-        printf "\t- Make Safari’s search banners default to Contains instead of Starts With\n"
-        defaults write com.apple.Safari FindOnPageMatchesWordStartsOnly -bool false
-
-        printf "\t- Remove useless icons from Safari’s bookmarks bar\n"
-        defaults write com.apple.Safari ProxiesInBookmarksBar "()"
-
-        printf "\t- Enable the Develop menu and the Web Inspector in Safari\n"
-        defaults write com.apple.Safari IncludeDevelopMenu -bool true
-        defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
-        defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
-
-        printf "\t- Add a context menu item for showing the Web Inspector in web views\n"
-        defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
-
-        printf "\t- Enable continuous spellchecking\n"
-        defaults write com.apple.Safari WebContinuousSpellCheckingEnabled -bool true
-
-        printf "\t- Disable auto-correct\n"
-        defaults write com.apple.Safari WebAutomaticSpellingCorrectionEnabled -bool false
-
-        printf "\t- Disable AutoFill\n"
-        defaults write com.apple.Safari AutoFillFromAddressBook -bool false
-        defaults write com.apple.Safari AutoFillPasswords -bool false
-        defaults write com.apple.Safari AutoFillCreditCardData -bool false
-        defaults write com.apple.Safari AutoFillMiscellaneousForms -bool false
-
-        printf "\t- Warn about fraudulent websites\n"
-        defaults write com.apple.Safari WarnAboutFraudulentWebsites -bool true
-
-        printf "\t- Enable 'Do Not Track'\n"
-        defaults write com.apple.Safari SendDoNotTrackHTTPHeader -bool true
-
-        printf "\t- Update extensions automatically\n"
-        defaults write com.apple.Safari InstallExtensionUpdatesAutomatically -bool true
-
-        ###############################################################################
-        echo
-        printf "\t Mail\n"
-        printf "\t #################################\n"
-        echo
-        ###############################################################################
-
-        printf "\t- Disable send and reply animations in Mail.app\n"
-        defaults write com.apple.mail DisableReplyAnimations -bool true
-        defaults write com.apple.mail DisableSendAnimations -bool true
-
-        printf "\t- Copy email addresses as 'foo@example.com' instead of 'Foo Bar <foo@example.com>' in Mail.app\n"
-        defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
-
-        printf "\t- Add the keyboard shortcut ⌘ + Enter to send an email in Mail.app\n"
-        defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" "@\U21a9"
-
-        printf "\t- Display emails in threaded mode, sorted by date (newest at the top)\n"
-        defaults write com.apple.mail InboxViewerAttributes -dict-add "DisplayInThreadedMode" -string "yes"
-        defaults write com.apple.mail InboxViewerAttributes -dict-add "SortedDescending" -string "no"
-        defaults write com.apple.mail InboxViewerAttributes -dict-add "SortOrder" -string "received-date"
-
-        defaults write com.apple.mail DraftsViewerAttributes -dict-add "DisplayInThreadedMode" -string "yes"
-        defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortedDescending" -string "no"
-        defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortOrder" -string "received-date"
-
-        defaults write com.apple.mail ArchiveViewerAttributes -dict-add "DisplayInThreadedMode" -string "yes"
-        defaults write com.apple.mail ArchiveViewerAttributes -dict-add "SortedDescending" -string "no"
-        defaults write com.apple.mail ArchiveViewerAttributes -dict-add "SortOrder" -string "received-date"
-
-        printf "\t- Display emails sorted by date (newest at the top) inside a thread\n"
-        defaults write com.apple.mail ConversationViewSortDescending -int 1
-
-        printf "\t- Do not play mail sounds\n"
-        defaults write com.apple.mail PlayMailSounds -int 0
-        defaults write com.apple.mail NewMessagesSoundName -string ""
-
-        printf "\t- Disable inline attachments (just show the icons)\n"
-        defaults write com.apple.mail DisableInlineAttachmentViewing -bool true
-
-        printf "\t- Disable automatic spell checking\n"
-        defaults write com.apple.mail SpellCheckingBehavior -string "NoSpellCheckingEnabled"
 
         ###############################################################################
         echo
@@ -551,35 +383,6 @@ case $applyConfiguration in
 
         printf "\t- Only use UTF-8 in Terminal.app\n"
         defaults write com.apple.terminal StringEncodings -array 4
-
-        # Only apply a custom terminal theme if not in CI, as on CI the command times out.
-        if [ -z "$CI" ]; then
-
-            printf "\t- Use a modified version of the Afterglow theme by default in Terminal.app\n"
-            osascript -e '
-            tell application "Terminal"
-
-                (* Open the custom theme so that it gets added to the list
-                of available terminal themes (note: this will open two
-                additional terminal windows). *)
-                do shell script "open $HOME/init/Afterglow.terminal"
-
-                (* Wait a little bit to ensure that the custom theme is added. *)
-                delay 1
-
-                (* Set the custom theme as the default terminal theme. *)
-                set default settings to settings set "Afterglow"
-
-            end tell'
-
-        fi
-
-        printf "\t- Enable Secure Keyboard Entry in Terminal.app\n"
-        # See: https://security.stackexchange.com/a/47786/8918
-        defaults write com.apple.terminal SecureKeyboardEntry -bool true
-
-        printf "\t- Disable the annoying line marks\n"
-        defaults write com.apple.Terminal ShowLineMarks -int 0
 
         ###############################################################################
         echo
@@ -654,20 +457,8 @@ case $applyConfiguration in
         printf "\t- Enable the automatic update check\n"
         defaults write com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true
 
-        printf "\t- Check for software updates daily, not just once per week\n"
-        defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
-
-        printf "\t- Download newly available updates in background\n"
-        defaults write com.apple.SoftwareUpdate AutomaticDownload -int 1
-
         printf "\t- Install System data files & security updates\n"
         defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
-
-        printf "\t- Turn on app auto-update\n"
-        defaults write com.apple.commerce AutoUpdate -bool true
-
-        printf "\t- Allow the App Store to reboot machine on macOS updates\n"
-        defaults write com.apple.commerce AutoUpdateRestartRequired -bool true
 
         ###############################################################################
         echo
