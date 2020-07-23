@@ -36,29 +36,10 @@ fi;
 
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
-# Clean out duplicates from shell history
-export HISTCONTROL=ignoreboth:erasedups
-
 # git completion
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-export FZF_DEFAULT_COMMAND='fd --type f'
-
-# alias to search in gitignored files
-fzfall () {
-    bash -c "FZF_DEFAULT_COMMAND=\"${FZF_DEFAULT_COMMAND} --no-ignore-vcs\"; fzf $@" -- "$@"
-}
-alias fzfa='fzfall'
-
-# upgrade outdated brew installations
-alias brewUpgrade="brew update && brew outdated -v | fzf -m | awk '{print \$1}' | xargs brew upgrade"
-
-# checkout a branch 
-alias checkout="git branch -l | fzf | xargs git co"
-
-# remove duplicates from bash history
-alias pruneHistory="tac $HISTFILE | awk '!x[$0]++' | tac | sponge $HISTFILE"
 
 eval "$(starship init bash)"
 

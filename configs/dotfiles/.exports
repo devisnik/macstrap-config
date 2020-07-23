@@ -13,3 +13,9 @@ export LESS_TERMCAP_md="${yellow}";
 # Don’t clear the screen after quitting a manual page.
 export MANPAGER='less -X';
 
+# Use fd for searching with fzf
+FZF_DEFAULT_COMMAND='fd --type f'
+
+# Clean out duplicates from shell history
+export HISTCONTROL=ignoreboth:erasedups
+

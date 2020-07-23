@@ -14,7 +14,7 @@ export LS_COLORS='no=00:fi=00:di=01;31:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40
 alias l="ls -lF --color"
 
 # List all files colorized in long format, including dot files
-alias la="ls -laF --color"
+alias ll="ls -laF --color"
 
 # List only directories
 alias lsd="ls -lF --color | grep --color=never '^d'"
@@ -71,5 +71,18 @@ alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resource
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
 
-# Fix https://github.com/petere/homebrew-postgresql/issues/49 by creating the folder before starting the cluster
-alias startpostgres="mkdir -p /usr/local/etc/postgresql/12/main/conf.d; pg_ctlcluster 12 main start"
+# search in gitignored files
+fzfall () {
+    bash -c "FZF_DEFAULT_COMMAND=\"${FZF_DEFAULT_COMMAND} --no-ignore-vcs\"; fzf $@" -- "$@"
+}
+alias fzfa='fzfall'
+
+# upgrade outdated brew installations
+alias brewUpgrade="brew update && brew outdated -v | fzf -m | awk '{print \$1}' | xargs brew upgrade"
+
+# checkout a branch 
+alias checkout="git branch -l | fzf | xargs git co"
+
+# remove duplicates from bash history
+alias pruneHistory="tac $HISTFILE | awk '!x[$0]++' | tac | sponge $HISTFILE"
+
